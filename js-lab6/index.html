@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab6</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table id="employeeTable">
+    <thead>
+      <tr>
+        <th>Name
+          <button class="sort-asc" data-column="Name">▲</button>
+          <button class="sort-desc" data-column="Name">▼</button>
+        </th>
+        <th>Position
+          <button class="sort-asc" data-column="Position">▲</button>
+          <button class="sort-desc" data-column="Position">▼</button>
+        </th>
+        <th>Office
+          <button class="sort-asc" data-column="Office">▲</button>
+          <button class="sort-desc" data-column="Office">▼</button>
+        </th>
+        <th>Age
+          <button class="sort-asc" data-column="Age">▲</button>
+          <button class="sort-desc" data-column="Age">▼</button>
+        </th>
+        <th>Start date
+          <button class="sort-asc" data-column="Start date">▲</button>
+          <button class="sort-desc" data-column="Start date">▼</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="employeeTableBody"></tbody>
+  </table>
+
+  <h2>Linked List Representation</h2>
+  <div id="linkedListContainer"></div>
+
+   <script>
+    const employeeData = [
+    ['Airi Satou', 'Accountant', 'Tokyo', 33, '2008/11/28'],
+    ['Angelica Ramos', 'CEO', 'London', 47, '2009/10/09'],
+    ['Ashton Cox', 'Junior Author', 'San Francisco', 66, '2009/01/12'],
+    ['Bradley Greer', 'Software Engineer', 'London', 41, '2012/10/13'],
+    ['Brenden Wagner', 'Software Engineer', 'San Francisco', 28, '2011/06/07'],
+    ['Brielle Williamson', 'Integration Specialist', 'New York', 61, '2012/12/02'],
+    ['Bruno Nash', 'Software Engineer', 'London', 38, '2011/05/03'],
+    ['Caesar Vance', 'Pre-Sales Support', 'New York', 21, '2011/12/12'],
+    ['Cara Stevens', 'Sales Assistant', 'New York', 46, '2011/12/06'],
+    ['Cedric Kelly', 'Senior Developer', 'Edinburgh', 22, '2012/03/29']
+  ];
+
+  function populateTable() {
+    const tbody = document.getElementById('employeeTableBody');
+    tbody.innerHTML = ""; 
+    employeeData.forEach(row => {
+      const tr = document.createElement('tr');
+      row.forEach(cell => {
+        const td = document.createElement('td');
+        td.textContent = cell;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+
+  function sortTable(columnName, ascending) {
+    const columns = ["Name", "Position", "Office", "Age", "Start date"];
+    const index = columns.indexOf(columnName);
+
+    employeeData.sort((a, b) => {
+      const valA = String(a[index]);
+      const valB = String(b[index]);
+      return ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+    });
+
+    populateTable();
+  }
+
+  document.querySelectorAll('button.sort-asc').forEach(button => {
+    button.addEventListener('click', () => {
+      const columnName = button.getAttribute('data-column');
+      sortTable(columnName, true);
+    });
+  });
+
+  document.querySelectorAll('button.sort-desc').forEach(button => {
+    button.addEventListener('click', () => {
+      const columnName = button.getAttribute('data-column');
+      sortTable(columnName, false);
+    });
+  });
+
+  window.onload = populateTable;
+
+
+
+    //-----------------------------------
+
+
+
+function LinkedList() {
+  this.head = null;
+}
+
+LinkedList.prototype.add = function(value) {
+  var newNode = { value: value, next: null };
+
+  if (!this.head) {
+    this.head = newNode;
+    return;
+  }
+
+  var current = this.head;
+  while (current.next) {
+    current = current.next;
+  }
+  current.next = newNode;
+
+  this.render();
+
+};
+
+LinkedList.prototype.delete = function(value) {
+  if (!this.head) return;
+
+  if (this.head.value === value) {
+    this.head = this.head.next;
+    return;
+  }
+
+  var current = this.head;
+  while (current.next && current.next.value !== value) {
+    current = current.next;
+  }
+
+  if (current.next) {
+    current.next = current.next.next;
+  }
+  
+  this.render();
+
+};
+
+
+LinkedList.prototype.render = function() {
+  var container = document.getElementById("linkedListContainer");
+  container.innerHTML = "";
+
+  var current = this.head;
+  while (current) {
+    container.innerHTML += current.value;
+    if (current.next) {
+      container.innerHTML += " → ";
+    }
+    current = current.next;
+  }
+
+  if (!this.head) {
+    container.textContent = "Empty List";
+  }
+};
+
+var list = new LinkedList();
+list.add(10);
+list.add(20);
+list.add(30);
+list.add(40);
+list.delete(20);
+
+
+//-----------------------------------
+
+
+
+
+    function Parent(name) {
+    this.name = name;
+   }
+   function Child(name, age) {
+    Parent.call(this, name);
+    this.age = age;
+   }
+
+   Child.prototype = Object.create(Parent.prototype);
+   Child.prototype.constructor = Child;
+
+   var c = new Child("Hazem", 25);
+   console.log(c.name); // "Hazem"
+   console.log(c.age);  // 25
+   </script>
+
+</body>
+</html>

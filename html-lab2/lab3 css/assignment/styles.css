@@ -1,0 +1,62 @@
+p, div, span {
+    font-family: 'Lucida Calligraphy';
+}
+
+div > h1 {
+    text-align: center;
+}
+
+.none-bullet-list {
+			list-style-type: none;
+		}
+
+#linksbar li > a {
+    color: red;
+    background-color: pink;
+    text-decoration: none;
+}
+
+#linksbar li > a:hover {
+    color: pink;
+    background-color: red;
+}
+
+#content > h2 + p {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#loginform {
+  border: 2px dashed;
+  color: rgb(20, 70, 60);
+}
+
+input[type="text"] {
+  background-color: yellow;
+}
+
+input[type="text"]:focus {
+  background-color: white;
+}
+
+
+
+#titles{
+    display: flex;
+    flex-direction: row;
+}
+
+.title{
+    border: 3px black solid;
+    padding: 6px;
+}
+
+#aboutus {
+    color: red;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
